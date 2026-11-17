@@ -51,6 +51,18 @@ npm run preview
 
 Vite places the build in `dist/`.
 
+## AI chatbot
+
+The floating chatbot sends messages to the Vercel Function in `api/chat.js`, which calls OpenAI without exposing the API key to site visitors.
+
+To enable it:
+
+1. In Vercel, open the project’s **Settings → Environment Variables**.
+2. Add `OPENAI_API_KEY` with your OpenAI API key. Keep it server-side; do not use a `VITE_` prefix or commit the key.
+3. Redeploy the site.
+
+For local development, create an ignored `.env.local` file in the project root with `OPENAI_API_KEY=your_openai_api_key`, then run `npm run dev`. The Vite development server routes `/api/chat` to the same handler. Never prefix the key with `VITE_` or commit it.
+
 ## Edit your site
 
 | File | What to change |
