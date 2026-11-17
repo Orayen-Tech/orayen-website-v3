@@ -261,7 +261,6 @@ function Footer({ onSelectService }) {
             <a href="#home">Home</a>
             <a href="#about">About Us</a>
             <a href="#services">Our Services</a>
-            <a href="#team">Our Team</a>
             <a href="#contact">Contact Us</a>
           </nav>
 
@@ -311,15 +310,6 @@ function Footer({ onSelectService }) {
             </a>
           </div>
         </div>
-
-        <section className="footer-team" id="team" aria-labelledby="team-heading">
-          <h3 id="team-heading">Meet the team</h3>
-          <ul>
-            <li>Senura <span>· Development</span></li>
-            <li>Thathsarani <span>· Business</span></li>
-            <li>Dineth <span>· Design</span></li>
-          </ul>
-        </section>
 
         <div className="footer-bottom">
           <p>© {new Date().getFullYear()} ORAYEN. All Rights Reserved.</p>
