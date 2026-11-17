@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import Contact from './Contact.jsx'
+import Chatbot from './Chatbot.jsx'
 import { services } from './content.js'
 import './index.css'
 
@@ -414,6 +415,7 @@ function App() {
         <FAQs />
       </main>
       <Footer onSelectService={setSelectedService} />
+      <Chatbot />
     </>
   )
 }
