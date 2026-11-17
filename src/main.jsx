@@ -339,6 +339,25 @@ function App() {
   const [selectedService, setSelectedService] = useState('')
 
   useEffect(() => {
+    const stage = document.querySelector('.intro-stage')
+    const logo = document.querySelector('.site-header img')
+    if (!stage || !logo) return
+
+    const alignIntroLogo = () => {
+      const logoBounds = logo.getBoundingClientRect()
+      stage.style.setProperty('--nav-logo-width', `${logoBounds.width}px`)
+      stage.style.setProperty('--nav-logo-center-x', `${logoBounds.left + logoBounds.width / 2}px`)
+      stage.style.setProperty('--nav-logo-center-y', `${logoBounds.top + logoBounds.height / 2}px`)
+      stage.style.setProperty('--viewport-center-x', `${document.documentElement.clientWidth / 2}px`)
+      stage.style.setProperty('--viewport-center-y', `${document.documentElement.clientHeight / 2}px`)
+    }
+
+    alignIntroLogo()
+    window.addEventListener('resize', alignIntroLogo)
+    return () => window.removeEventListener('resize', alignIntroLogo)
+  }, [])
+
+  useEffect(() => {
     const target = document.getElementById(window.location.hash.slice(1))
     target?.scrollIntoView({ behavior: 'instant' })
   }, [])
