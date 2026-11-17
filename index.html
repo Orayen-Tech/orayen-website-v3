@@ -17,58 +17,99 @@
       place-items: center;
       overflow: hidden;
       background: radial-gradient(ellipse at center, #122752 0%, #080f24 68%);
-      animation: intro-exit 3s cubic-bezier(.65, 0, .35, 1) 0s forwards;
+      animation: intro-exit .2s cubic-bezier(.65, 0, .35, 1) 4.2s forwards;
     }
-    .intro-logo {
+    .intro-stage {
+      --nav-logo-width: 148px;
+      --nav-logo-center-x: max(115.6px, calc(50vw - 584.4px));
+      --nav-logo-center-y: 51.5px;
+      --viewport-center-x: 50vw;
+      --viewport-center-y: 50vh;
+      width: clamp(240px, 46vw, 500px);
       display: flex;
       align-items: center;
-      gap: .12em;
-      color: #fff;
-      font: 800 clamp(3rem, 11vw, 6rem)/1 Arial, sans-serif;
-      letter-spacing: -.075em;
+      transform: translateX(36.14%);
+      will-change: transform;
+      animation:
+        stage-shift 1.3s cubic-bezier(.65, 0, .35, 1) 1.7s forwards,
+        stage-to-nav 1s cubic-bezier(.65, 0, .35, 1) 3.2s forwards;
     }
     .intro-mark {
-      width: 1em;
-      height: 1em;
+      display: block;
+      width: 29.24%;
+      height: auto;
       flex: 0 0 auto;
-      animation: intro-spin 1.15s cubic-bezier(.37, 0, .63, 1) both;
-    }
-    .intro-letter {
-      display: inline-block;
       opacity: 0;
-      transform: translateX(-.65em) scale(.92);
-      animation: intro-letter-in .55s cubic-bezier(.16, 1, .3, 1) forwards;
+      transform: rotate(0deg) scale(.7);
+      transform-origin: 47.4% 50%;
+      will-change: transform, opacity;
+      animation:
+        mark-in .8s cubic-bezier(.22, 1, .36, 1) .15s forwards,
+        mark-spin 1.9s cubic-bezier(.45, 0, .15, 1) .15s forwards;
     }
-    .intro-letter:nth-child(2) { animation-delay: 1.18s; }
-    .intro-letter:nth-child(3) { animation-delay: 1.26s; }
-    .intro-letter:nth-child(4) { animation-delay: 1.34s; }
-    .intro-letter:nth-child(5) { animation-delay: 1.42s; }
-    .intro-letter:nth-child(6) { animation-delay: 1.5s; }
-    @keyframes intro-spin { to { transform: rotate(-360deg); } }
-    @keyframes intro-letter-in {
-      to { opacity: 1; transform: translateX(0) scale(1); }
+    .intro-text {
+      display: block;
+      width: 70.76%;
+      height: auto;
+      flex: 0 0 auto;
+      opacity: 0;
+      filter: blur(10px);
+      transform: translateX(-10%);
+      -webkit-mask-image: linear-gradient(90deg, #000 40%, transparent 60%);
+      mask-image: linear-gradient(90deg, #000 40%, transparent 60%);
+      -webkit-mask-size: 260% 100%;
+      mask-size: 260% 100%;
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      -webkit-mask-position: 100% 0;
+      mask-position: 100% 0;
+      will-change: transform, opacity, filter, mask-position;
+      animation:
+        text-in 1.2s cubic-bezier(.22, 1, .36, 1) 1.75s forwards,
+        text-reveal 1.4s cubic-bezier(.45, 0, .2, 1) 1.75s forwards;
     }
+    @keyframes mark-in { to { opacity: 1; transform: rotate(var(--r, 0deg)) scale(1); } }
+    @keyframes mark-spin { to { transform: rotate(-360deg) scale(1); } }
+    @keyframes stage-shift { to { transform: translateX(0); } }
+    @keyframes stage-to-nav {
+      to {
+        width: var(--nav-logo-width);
+        transform: translate(calc(var(--nav-logo-center-x) - var(--viewport-center-x)), calc(var(--nav-logo-center-y) - var(--viewport-center-y)));
+      }
+    }
+    @keyframes text-in { to { opacity: 1; filter: blur(0); transform: translateX(0); } }
+    @keyframes text-reveal { to { -webkit-mask-position: 0 0; mask-position: 0 0; } }
     @keyframes intro-exit {
-      0%, 78% { opacity: 1; visibility: visible; }
-      100% { opacity: 0; visibility: hidden; }
+      from { opacity: 1; visibility: visible; }
+      to { opacity: 0; visibility: hidden; }
     }
     @media (prefers-reduced-motion: reduce) {
-      .intro { animation-duration: .8s; }
-      .intro-mark { animation: none; }
-      .intro-letter { animation-duration: .01ms; animation-delay: 0s; }
+      .intro { animation-duration: .6s; animation-delay: 1.2s; }
+      .intro-stage { transform: none; animation: none; }
+      .intro-mark { transform: none; animation: mark-fade .4s ease forwards; }
+      .intro-text {
+        filter: none;
+        transform: none;
+        -webkit-mask-image: none;
+        mask-image: none;
+        animation: mark-fade .4s ease .2s forwards;
+      }
+      @keyframes mark-fade { to { opacity: 1; } }
+    }
+    @media (max-width: 900px) {
+      .intro-stage { --nav-logo-width: 124px; --nav-logo-center-x: 98px; }
+    }
+    @media (max-width: 720px) {
+      .intro-stage { --nav-logo-center-x: 90px; --nav-logo-center-y: 42.5px; }
     }
   </style>
 </head>
 <body>
   <noscript>Enable JavaScript to view the ORAYEN website.</noscript>
   <div class="intro" role="status" aria-label="Loading ORAYEN">
-    <div class="intro-logo" aria-hidden="true">
-      <img class="intro-mark" src="/assets/favicon.png" alt="">
-      <span class="intro-letter">r</span>
-      <span class="intro-letter">a</span>
-      <span class="intro-letter">y</span>
-      <span class="intro-letter">e</span>
-      <span class="intro-letter">n</span>
+    <div class="intro-stage" aria-hidden="true">
+      <img class="intro-mark" src="/assets/orayen-symbol.png" alt="">
+      <img class="intro-text" src="/assets/orayen-text.png" alt="">
     </div>
   </div>
   <div id="root"></div>
