@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import Contact from './Contact.jsx'
-import { services, technologyStack } from './content.js'
+import { services } from './content.js'
 import './index.css'
 
 const navigation = [
@@ -227,26 +227,110 @@ function Pricing() {
   )
 }
 
-function Footer() {
+function Footer({ onSelectService }) {
   return (
     <footer className="site-footer">
-      <div className="wrap footer-inner">
-        <Logo width={128} height={35} />
-        <p>Technology &amp; Digital Solutions<br />Sri Lanka</p>
-        <nav aria-label="Footer navigation">
-          <a href="#services">Services</a><a href="#portfolio">Portfolio</a><a href="#pricing">Pricing</a><a href="#contact">Contact</a>
-        </nav>
-        <a href="#home">Back to top <span aria-hidden="true">↑</span></a>
+      <div className="wrap">
+        <div className="footer-cta">
+          <div>
+            <p className="footer-kicker">Your next chapter starts here</p>
+            <h2>Let’s build your digital future.</h2>
+          </div>
+          <a className="button button-white footer-cta-button" href="#contact">
+            Start a Conversation <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+
+        <div className="footer-grid">
+          <div className="footer-brand">
+            <Logo width={160} height={44} />
+            <p className="footer-description">
+              ORAYEN is a Sri Lanka–based technology and digital solutions company delivering modern, creative, and reliable solutions for businesses and individuals. We help businesses grow through innovative technology, professional design, and exceptional digital experiences.
+            </p>
+            <p className="footer-location">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z" />
+                <circle cx="12" cy="10" r="2.5" />
+              </svg>
+              <span>Sri Lanka</span>
+            </p>
+          </div>
+
+          <nav className="footer-links" aria-label="Footer navigation">
+            <h3>Explore</h3>
+            <a href="#home">Home</a>
+            <a href="#about">About Us</a>
+            <a href="#services">Our Services</a>
+            <a href="#team">Our Team</a>
+            <a href="#contact">Contact Us</a>
+          </nav>
+
+          <div className="footer-links">
+            <h3>Our Expertise</h3>
+            {services.map(({ title }) => (
+              <a key={title} href="#contact" onClick={() => onSelectService(title)}>{title}</a>
+            ))}
+          </div>
+
+          <div className="footer-connect">
+            <h3>Let’s Connect</h3>
+            <a className="footer-contact-card" href="tel:+94703670956">
+              <span className="footer-contact-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M5 3h4l2 5-2.5 1.5a15 15 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 5a2 2 0 0 1 2-2Z" />
+                </svg>
+              </span>
+              <span className="footer-contact-copy">
+                <span className="footer-contact-label">Call our team</span>
+                <span className="footer-contact-value">070 367 0956</span>
+              </span>
+            </a>
+            <a className="footer-contact-card" href="https://wa.me/94703670956" target="_blank" rel="noopener noreferrer">
+              <span className="footer-contact-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M4 20 5.2 16.4A8 8 0 1 1 8 19.3L4 20Z" />
+                  <path d="M9 8.5c.2-.5.4-.5.7-.5h.5c.2 0 .4.1.5.4l.7 1.6c.1.2 0 .4-.1.6l-.5.6c-.2.2-.2.4-.1.6a7 7 0 0 0 2.7 2.6c.2.1.4.1.6-.1l.7-.8c.2-.2.4-.2.6-.1l1.5.7c.3.1.4.3.4.5 0 .3-.2 1.1-.7 1.5s-1.1.7-1.8.6a8 8 0 0 1-3.4-1.3 9 9 0 0 1-2.8-2.7 7.7 7.7 0 0 1-1.1-2.5c-.1-.8.2-1.5.6-1.7Z" />
+                </svg>
+              </span>
+              <span className="footer-contact-copy">
+                <span className="footer-contact-label">Message us</span>
+                <span className="footer-contact-value">Chat on WhatsApp <span aria-hidden="true">↗</span></span>
+              </span>
+            </a>
+            <a className="footer-contact-card" href="mailto:orayen.tech@gmail.com">
+              <span className="footer-contact-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <rect x="3" y="5" width="18" height="14" rx="2" />
+                  <path d="m4 7 8 6 8-6" />
+                </svg>
+              </span>
+              <span className="footer-contact-copy">
+                <span className="footer-contact-label">Email enquiries</span>
+                <span className="footer-contact-value">orayen.tech@gmail.com</span>
+              </span>
+            </a>
+          </div>
+        </div>
+
+        <section className="footer-team" id="team" aria-labelledby="team-heading">
+          <h3 id="team-heading">Meet the team</h3>
+          <ul>
+            <li>Senura <span>· Development</span></li>
+            <li>Thathsarani <span>· Business</span></li>
+            <li>Dineth <span>· Design</span></li>
+          </ul>
+        </section>
+
+        <div className="footer-bottom">
+          <p>© {new Date().getFullYear()} ORAYEN. All Rights Reserved.</p>
+          <p>Built with purpose by ORAYEN</p>
+        </div>
       </div>
-      <div className="wrap footer-technology">
-        <p className="font-semibold text-white">Technology stack</p>
-        <ul className="flex list-none flex-wrap gap-2">
-          {technologyStack.map((technology) => <li key={technology}>{technology}</li>)}
-        </ul>
-      </div>
-      <div className="wrap footer-bottom flex flex-wrap justify-between gap-2">
-        <p>© 2026 ORAYEN. All Rights Reserved.</p><p>Website under development</p>
-      </div>
+      <a className="footer-back-to-top" href="#home" aria-label="Back to top">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="m6 14 6-6 6 6M12 8v11" />
+        </svg>
+      </a>
     </footer>
   )
 }
@@ -294,7 +378,7 @@ function App() {
         <Pricing />
         <Contact service={selectedService} onSelectService={setSelectedService} />
       </main>
-      <Footer />
+      <Footer onSelectService={setSelectedService} />
     </>
   )
 }

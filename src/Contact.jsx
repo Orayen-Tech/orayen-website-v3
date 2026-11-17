@@ -7,6 +7,26 @@ const serviceOptions = [
   'Something else',
 ]
 
+const countries = [
+  'Australia',
+  'Canada',
+  'India',
+  'Singapore',
+  'Sri Lanka',
+  'United Arab Emirates',
+  'United Kingdom',
+  'United States',
+  'Other',
+]
+
+const budgetOptions = [
+  'Not sure yet',
+  'Under LKR 100,000',
+  'LKR 100,000–500,000',
+  'LKR 500,000–1,000,000',
+  'LKR 1,000,000+',
+]
+
 export default function Contact({ service, onSelectService }) {
   const [status, setStatus] = useState('')
 
@@ -16,12 +36,18 @@ export default function Contact({ service, onSelectService }) {
     const brief = [
       'ORAYEN project enquiry',
       '',
-      'Name: ' + data.get('name'),
-      'Email: ' + data.get('email'),
-      'Service: ' + data.get('service'),
+      'Full name: ' + data.get('name'),
+      'Email address: ' + data.get('email'),
+      'Phone / WhatsApp: ' + data.get('phone'),
+      'Country: ' + (data.get('country') || 'Not specified'),
+      'Service interested in: ' + data.get('service'),
+      'Estimated budget: ' + data.get('budget'),
+      'Preferred meeting: ' + data.get('meeting'),
       '',
       'Project details',
       data.get('message'),
+      '',
+      'Consent: I agree that ORAYEN may use the details I provide to respond to my enquiry via email, phone or WhatsApp.',
     ].join('\r\n')
 
     if (event.nativeEvent.submitter?.value !== 'download') {
@@ -50,23 +76,59 @@ export default function Contact({ service, onSelectService }) {
           <h2>Let’s build something for your business.</h2>
           <p className="body-copy">Share your project idea and tell us what you need help with.</p>
           <a className="contact-email" href={'mailto:' + contactEmail}>{contactEmail}</a>
-          <a className="contact-whatsapp" href="https://wa.me/94703670956">WhatsApp: 0703670956</a>
+          <a className="contact-whatsapp" href="https://wa.me/94703670956" aria-label="WhatsApp 0703670956">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 2a9.8 9.8 0 0 0-8.4 14.8L2 22l5.4-1.4A10 10 0 1 0 12 2Zm0 17.9a8 8 0 0 1-4.1-1.1l-.3-.2-3.2.8.9-3.1-.2-.3A8 8 0 1 1 12 19.9Zm4.4-6c-.2-.1-1.4-.7-1.6-.8s-.4-.1-.5.1-.6.8-.8 1-.3.2-.5.1a6.5 6.5 0 0 1-1.9-1.2 7.1 7.1 0 0 1-1.3-1.6c-.1-.2 0-.3.1-.4l.4-.4.2-.4v-.4c0-.1-.5-1.3-.7-1.8s-.4-.4-.5-.4h-.5c-.2 0-.4.1-.6.3a2.5 2.5 0 0 0-.8 1.9 4.3 4.3 0 0 0 .9 2.3 9.8 9.8 0 0 0 3.8 3.4c.5.2.9.4 1.2.5.5.1.9.1 1.3.1.4-.1 1.4-.6 1.6-1.1s.2-1 .2-1.1-.2-.2-.4-.3Z" />
+            </svg>
+            <span>0703670956</span>
+          </a>
         </div>
         <form className="contact-form" id="project-form" onSubmit={submitBrief}>
           <div className="form-row">
-            <label>Your name<input name="name" autoComplete="name" required maxLength={100} /></label>
-            <label>Email address<input name="email" type="email" autoComplete="email" required maxLength={254} /></label>
+            <label>Full Name *<input name="name" autoComplete="name" placeholder="Your full name" required maxLength={100} /></label>
+            <label>Email Address *<input name="email" type="email" autoComplete="email" placeholder="name@company.com" required maxLength={254} /></label>
+          </div>
+          <div className="form-row">
+            <label>Phone / WhatsApp *<input name="phone" type="tel" autoComplete="tel" placeholder="+94 71 234 5678" required maxLength={30} /></label>
+            <label>
+              Country
+              <select name="country" defaultValue="">
+                <option value="">Select country</option>
+                {countries.map((country) => <option key={country}>{country}</option>)}
+              </select>
+            </label>
+          </div>
+          <div className="form-row">
+            <label>
+              Service Interested In *
+              <select name="service" value={service} required onChange={(event) => onSelectService(event.target.value)}>
+                <option value="">Choose a service</option>
+                {serviceOptions.map((option) => <option key={option}>{option}</option>)}
+              </select>
+            </label>
+            <label>
+              Estimated Budget
+              <select name="budget" defaultValue="Not sure yet">
+                {budgetOptions.map((option) => <option key={option}>{option}</option>)}
+              </select>
+            </label>
           </div>
           <label>
-            Service
-            <select name="service" value={service} required onChange={(event) => onSelectService(event.target.value)}>
-              <option value="">Select an option</option>
-              {serviceOptions.map((option) => <option key={option}>{option}</option>)}
+            Preferred Meeting
+            <select name="meeting" defaultValue="Online Meeting">
+              <option>Online Meeting</option>
+              <option>Phone Call</option>
+              <option>WhatsApp Call</option>
+              <option>In-person Meeting</option>
             </select>
           </label>
           <label>
-            Tell us about your project
-            <textarea name="message" required rows={4} maxLength={3000} />
+            Project Details *
+            <textarea name="message" placeholder="Tell us about your project" required rows={4} maxLength={3000} />
+          </label>
+          <label className="consent-label">
+            <input name="consent" type="checkbox" required />
+            <span>I agree that ORAYEN may use the details I provide to respond to my enquiry via email, phone or WhatsApp.</span>
           </label>
           <div className="flex flex-wrap gap-2">
             <button className="button button-blue" type="submit" value="email">Open email draft <span aria-hidden="true">→</span></button>
