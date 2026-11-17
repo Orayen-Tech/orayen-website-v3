@@ -9,7 +9,7 @@ const navigation = [
   { id: 'about', label: 'About us' },
   { id: 'services', label: 'Services' },
   { id: 'portfolio', label: 'Portfolio' },
-  { id: 'pricing', label: 'Pricing' },
+  { id: 'faqs', label: 'FAQs' },
 ]
 
 const collage = [
@@ -46,6 +46,29 @@ const portfolio = [
     category: 'Travel experiences',
     title: 'Make exploring easy.',
     description: 'Thoughtful layouts for destinations, experiences, and travel services.',
+  },
+]
+
+const faqs = [
+  {
+    question: 'What services does ORAYEN provide?',
+    answer: 'We offer Web Development, Mobile Application Development, UI/UX Design, Graphic Design, and Canva Design.',
+  },
+  {
+    question: 'How do you estimate project costs?',
+    answer: 'Project costs depend on the services, features, and scope you need. Share your estimated budget in the enquiry form, or choose “Not sure yet”, and we can discuss a quote tailored to your project.',
+  },
+  {
+    question: 'How long does a project take?',
+    answer: 'Timelines depend on the project scope and requirements. Once we learn more about your project, we can discuss an estimated schedule and next steps.',
+  },
+  {
+    question: 'How do I get started?',
+    answer: 'Complete the contact form with your project details and the service you are interested in. We will follow up using your preferred contact method.',
+  },
+  {
+    question: 'Can I discuss my project online?',
+    answer: 'Yes. Select Online Meeting as your preferred meeting option in the contact form.',
   },
 ]
 
@@ -208,19 +231,21 @@ function Portfolio() {
   )
 }
 
-function Pricing() {
+function FAQs() {
   return (
-    <section id="pricing" className="section pricing-section" aria-labelledby="pricing-heading">
+    <section id="faqs" className="section section-soft" aria-labelledby="faqs-heading">
       <div className="wrap">
-        <div className="pricing-panel">
-          <div><p className="eyebrow">Pricing</p><h2 id="pricing-heading">A plan shaped around your project.</h2></div>
-          <p>Every project is different, so pricing is based on the services, features, and scope you need. Tell us what you have in mind and we’ll discuss a quote with you.</p>
-          <div className="pricing-details">
-            <div><strong>Your goals</strong><span>What you want to achieve</span></div>
-            <div><strong>Project scope</strong><span>The features and services you need</span></div>
-            <div><strong>Next steps</strong><span>A quote tailored to your project</span></div>
-          </div>
-          <a className="button button-white" href="#contact">Request a quote <span aria-hidden="true">→</span></a>
+        <div className="section-header">
+          <div><p className="eyebrow">FAQs</p><h2 id="faqs-heading">Answers to common questions.</h2></div>
+          <p className="body-copy">Learn what to expect when planning a project with ORAYEN.</p>
+        </div>
+        <div className="faq-list">
+          {faqs.map(({ question, answer }) => (
+            <details className="faq-item" key={question}>
+              <summary>{question}</summary>
+              <p>{answer}</p>
+            </details>
+          ))}
         </div>
       </div>
     </section>
@@ -261,6 +286,7 @@ function Footer({ onSelectService }) {
             <a href="#home">Home</a>
             <a href="#about">About Us</a>
             <a href="#services">Our Services</a>
+            <a href="#faqs">FAQs</a>
             <a href="#contact">Contact Us</a>
           </nav>
 
@@ -356,7 +382,7 @@ function App() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return
 
     const elements = document.querySelectorAll(
-      '.section-header, .about-grid > *, .cards > *, .portfolio-card, .pricing-panel, .contact-grid > *',
+      '.section-header, .about-grid > *, .cards > *, .portfolio-card, .faq-item, .contact-grid > *',
     )
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -384,8 +410,8 @@ function App() {
         <About />
         <Services onSelectService={setSelectedService} />
         <Portfolio />
-        <Pricing />
         <Contact service={selectedService} onSelectService={setSelectedService} />
+        <FAQs />
       </main>
       <Footer onSelectService={setSelectedService} />
     </>
