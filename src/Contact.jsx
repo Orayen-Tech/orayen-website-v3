@@ -19,14 +19,6 @@ const countries = [
   'Other',
 ]
 
-const budgetOptions = [
-  'Not sure yet',
-  'Under LKR 100,000',
-  'LKR 100,000–500,000',
-  'LKR 500,000–1,000,000',
-  'LKR 1,000,000+',
-]
-
 export default function Contact({ service, onSelectService }) {
   const [status, setStatus] = useState('')
 
@@ -41,7 +33,6 @@ export default function Contact({ service, onSelectService }) {
       'Phone / WhatsApp: ' + data.get('phone'),
       'Country: ' + (data.get('country') || 'Not specified'),
       'Service interested in: ' + data.get('service'),
-      'Estimated budget: ' + data.get('budget'),
       'Preferred meeting: ' + data.get('meeting'),
       '',
       'Project details',
@@ -104,12 +95,6 @@ export default function Contact({ service, onSelectService }) {
               <select name="service" value={service} required onChange={(event) => onSelectService(event.target.value)}>
                 <option value="">Choose a service</option>
                 {serviceOptions.map((option) => <option key={option}>{option}</option>)}
-              </select>
-            </label>
-            <label>
-              Estimated Budget
-              <select name="budget" defaultValue="Not sure yet">
-                {budgetOptions.map((option) => <option key={option}>{option}</option>)}
               </select>
             </label>
           </div>
