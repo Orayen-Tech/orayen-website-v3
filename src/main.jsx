@@ -335,6 +335,26 @@ function Footer({ onSelectService }) {
                 <span className="footer-contact-value">orayen.tech@gmail.com</span>
               </span>
             </a>
+            <div className="footer-socials" aria-label="Social media">
+              <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M14 8h3V4h-3c-2.8 0-5 2.2-5 5v3H6v4h3v4h4v-4h3l1-4h-4V9c0-.6.4-1 1-1Z" />
+                </svg>
+              </a>
+              <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <rect x="3" y="3" width="18" height="18" rx="5" />
+                  <circle cx="12" cy="12" r="4" />
+                  <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+                </svg>
+              </a>
+              <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M5 8v11M5 5v.1M9 19v-6a4 4 0 0 1 8 0v6M9 9v10" />
+                  <path d="M17 19v-6a4 4 0 0 0-8 0" />
+                </svg>
+              </a>
+            </div>
           </div>
         </div>
 
