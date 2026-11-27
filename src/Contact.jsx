@@ -30,6 +30,11 @@ export default function Contact({ service, onSelectService }) {
 
     if (sending) return
 
+    if (!supabase) {
+      setStatus(`The contact form is unavailable right now. Please email ${contactEmail}.`)
+      return
+    }
+
     const form = event.currentTarget
     const data = new FormData(form)
 

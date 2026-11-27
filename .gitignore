@@ -1,7 +1,13 @@
-node_modules/
-dist/
-*.local
+# Environment variables
+.env
+.env.*
+!.env.example
 
+# Dependencies
 node_modules/
+
+# Build files
 dist/
-build-error.txt
+
+# Logs
+*.log

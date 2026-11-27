@@ -184,6 +184,119 @@ function About() {
   )
 }
 
+function ServiceVisual({ type }) {
+  return (
+    <div className={`service-art service-art-${type}`} aria-hidden="true">
+      {type === 'web' && (
+        <div className="visual-browser service-float">
+          <div className="visual-browser-bar"><i /><i /><i /><span>orayen.studio</span></div>
+          <div className="visual-browser-content"><b>Build for what’s next.</b><span /><span /><span /><strong>Explore <i>↗</i></strong></div>
+          <span className="visual-code-chip">&lt;/&gt;</span>
+        </div>
+      )}
+      {type === 'mobile' && (
+        <div className="visual-phone service-float">
+          <span className="visual-phone-speaker" />
+          <b>Explore</b><span className="visual-phone-search">Find your next stop</span>
+          <span className="visual-phone-map">
+            <svg viewBox="0 0 80 70">
+              <path d="M10 56C19 53 18 42 31 40s12-18 25-16 9-9 16-13" />
+              <circle cx="10" cy="56" r="4" /><circle cx="72" cy="11" r="4" />
+            </svg>
+          </span>
+          <span className="visual-phone-nav"><i /><i /><i /></span>
+        </div>
+      )}
+      {type === 'uiux' && (
+        <div className="visual-flow service-float">
+          <span className="visual-flow-node">Discover</span><i /><span className="visual-flow-node visual-flow-node-active">Design</span><i /><span className="visual-flow-node">Delight</span>
+        </div>
+      )}
+      {type === 'graphic' && (
+        <div className="visual-poster service-float">
+          <span>MAKE<br />IT BOLD</span><i /><b>BRAND / 01</b>
+        </div>
+      )}
+      {type === 'canva' && (
+        <div className="visual-canvas service-float">
+          <div className="visual-canvas-card"><span>MONDAY<br />MOTIVATION</span><i /></div>
+          <div className="visual-palette"><i /><i /><i /><i /></div>
+        </div>
+      )}
+    </div>
+  )
+}
+
+function ServiceCard({ service, onSelectService }) {
+  const [isFlipped, setIsFlipped] = useState(false)
+  const [isHovered, setIsHovered] = useState(false)
+  const focusTarget = useRef('')
+  const flipButton = useRef(null)
+  const enquireLink = useRef(null)
+  const isOpen = isFlipped || isHovered
+  const { title, icon, description, visual } = service
+
+  useEffect(() => {
+    if (focusTarget.current === 'back') enquireLink.current?.focus()
+    if (focusTarget.current === 'front') flipButton.current?.focus()
+    focusTarget.current = ''
+  }, [isOpen])
+
+  function showEnquiry() {
+    focusTarget.current = 'back'
+    setIsFlipped(true)
+  }
+
+  function showService() {
+    focusTarget.current = 'front'
+    setIsHovered(false)
+    setIsFlipped(false)
+  }
+
+  return (
+    <article
+      className={`card${isOpen ? ' is-open' : ''}`}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <div className="service-card-inner">
+        <div className="service-card-face service-card-front" aria-hidden={isOpen} inert={isOpen}>
+          <ServiceVisual type={visual} />
+          <span className="service-icon" aria-hidden="true">{icon}</span>
+          <h3>{title}</h3>
+          <p>{description}</p>
+          <button
+            ref={flipButton}
+            className="service-card-flip"
+            type="button"
+            aria-expanded={isOpen}
+            onClick={showEnquiry}
+          >
+            View details <span aria-hidden="true">↗</span>
+          </button>
+        </div>
+        <div className="service-card-face service-card-back" aria-hidden={!isOpen} inert={!isOpen}>
+          <span className="service-back-icon" aria-hidden="true">{icon}</span>
+          <p className="service-back-kicker">Let’s make it happen</p>
+          <h3>{title}</h3>
+          <a
+            ref={enquireLink}
+            className="service-card-enquire"
+            href="#contact"
+            aria-label={`Enquire about ${title}`}
+            onClick={() => onSelectService(title)}
+          >
+            Enquire about this service <span aria-hidden="true">→</span>
+          </a>
+          <button className="service-card-return" type="button" onClick={showService}>
+            <span aria-hidden="true">←</span> Back to service
+          </button>
+        </div>
+      </div>
+    </article>
+  )
+}
+
 function Services({ onSelectService }) {
   return (
     <section id="services" className="section section-soft" aria-labelledby="services-heading">
@@ -193,15 +306,8 @@ function Services({ onSelectService }) {
           <p className="body-copy">Choose a service to start your project enquiry.</p>
         </div>
         <div className="cards">
-          {services.map(({ title, icon, description }) => (
-            <article className="card" key={title}>
-              <span className="service-icon" aria-hidden="true">{icon}</span>
-              <h3>{title}</h3>
-              <p>{description}</p>
-              <a className="text-link" href="#contact" aria-label={`Enquire about ${title}`} onClick={() => onSelectService(title)}>
-                Enquire about this service <span aria-hidden="true">→</span>
-              </a>
-            </article>
+          {services.map((service) => (
+            <ServiceCard key={service.title} service={service} onSelectService={onSelectService} />
           ))}
         </div>
       </div>
