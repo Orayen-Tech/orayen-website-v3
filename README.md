@@ -63,6 +63,10 @@ To enable it:
 
 For local development, create an ignored `.env.local` file in the project root with `OPENAI_API_KEY=your_openai_api_key`, then run `npm run dev`. The Vite development server routes `/api/chat` to the same handler. Never prefix the key with `VITE_` or commit it.
 
+## Supabase content tables
+
+Run `supabase/content.sql` in the Supabase SQL Editor to create and seed the `public.portfolios` and `public.services` tables. The script can be rerun safely; it updates existing rows by slug. Row-level security allows public reads of published entries only. Portfolio image values are filenames in `public/assets/`.
+
 ## Edit your site
 
 | File | What to change |
